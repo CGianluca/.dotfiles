@@ -30,6 +30,7 @@ return {
           "vimdoc",
           "xml",
           "yaml",
+          "cmake",
         },
         incremental_selection = {
           enable = true,
