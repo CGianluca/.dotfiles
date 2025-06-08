@@ -1,7 +1,8 @@
 local servers = {
     lua_ls = {}, -- insert capabilities inside {}
-    cmake = {},
+    ruby_lsp = {},
     pylsp = {},
+    cmake = {},
 
 }
 
@@ -23,7 +24,12 @@ return {
                 }
             })
             require('mason-lspconfig').setup({
-                ensure_installed = server_list
+                ensure_installed = server_list,
+                handlers = {
+                    function(server_name)
+                        require('lspconfig')[server_name].sdetup({})
+                    end,
+                }
             })
         end
 
@@ -50,9 +56,11 @@ return {
             for server, config in pairs(servers) do
                 -- passing config.capabilities to blink.cmp merges with the capabilities in your
                 -- `opts[server].capabilities, if you've defined it
-                config.capabilities = require('blink.cmp').get_lsp_capabilities(config.capabilities)
-                lspconfig[server].setup(config)
+               config.capabilities = require('blink.cmp').get_lsp_capabilities(config.capabilities)
+               lspconfig[server].setup(config)
             end
+ --           require("lspconfig").lua_ls.setup {}
+--            require("lspconfig").ruby_lsp.setup {}
         end
     },
     {
