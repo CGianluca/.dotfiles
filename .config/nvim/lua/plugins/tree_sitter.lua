@@ -31,6 +31,7 @@ return {
           "markdown_inline",
           "printf",
           "python",
+          "ruby",
           "query",
           "regex",
           "toml",
