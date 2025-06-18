@@ -1,0 +1,83 @@
+local servers = {
+    lua_ls = {
+        settings = {
+            Lua = {
+                runtime = { version = 'LuaJIT' },
+                workspace = {
+                    checkThirdParty = false,
+                    library = {
+                        '${3rd}/luv/library',
+                        unpack(vim.api.nvim_get_runtime_file('', true)),
+                    },
+                },
+                completition = {
+                    callSnippet = 'Replace',
+                },
+            },
+        }
+    }, -- insert capabilities inside {}
+    ruby_lsp = {},
+    pylsp = {},
+    cmake = {},
+
+}
+
+return {
+
+    {
+        'williamboman/mason-lspconfig.nvim',
+        dependencies = {
+            'williamboman/mason.nvim'
+        },
+        config = function(_, _)
+            local server_list = {}
+            for server, _ in pairs(servers) do
+                table.insert(server_list, server)
+            end
+            require('mason').setup({
+                pip = {
+                    upgrade_pip = true
+                }
+            })
+            require('mason-lspconfig').setup({
+                automatic_enable = true,
+                ensure_installed = server_list,
+                handlers = {
+                    function(server_name)
+                        require('lspconfig')[server_name].sdetup({})
+                    end,
+                }
+            })
+        end
+
+    },
+    {'neovim/nvim-lspconfig',
+        dependencies = {
+            {
+                'saghen/blink.cmp',
+            },
+            {
+                "folke/lazydev.nvim",
+                ft = "lua", -- only load on lua files
+                opts = {
+                    library = {
+                        -- See the configuration section for more details
+                        -- Load luvit types when the `vim.uv` word is found
+                        { path = "${3rd}/luv/library", words = { "vim%.uv" } },
+                    },
+                },
+            },
+        },
+        config = function(_,_)
+            local lspconfig = require('lspconfig')
+            for server, config in pairs(servers) do
+                -- passing config.capabilities to blink.cmp merges with the capabilities in your
+                -- `opts[server].capabilities, if you've defined it
+               config.capabilities = require('blink.cmp').get_lsp_capabilities(config.capabilities)
+               lspconfig[server].setup(config)
+            end
+ --           require("lspconfig").lua_ls.setup {}
+--            require("lspconfig").ruby_lsp.setup {}
+        end
+    },
+}
