@@ -1,4 +1,4 @@
-return { 
+return {
     {
       "nvim-treesitter/nvim-treesitter",
       build = ":TSUpdate", -- tells lazy that when update this plugin calls TSUpdate command (to rebuild all the new parsers)

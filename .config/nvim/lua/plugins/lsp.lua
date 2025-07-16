@@ -26,43 +26,61 @@ return {
               'saghen/blink.cmp',
         },
         config = function()
-            local capabilities = require('blink.cmp').get_lsp_capabilities()
 
             local servers = {
-                lua_ls = {
-                    settings = {
-                        Lua = {
-                            completition = {
-                                callSnippet = 'Replace',
+                "lua_ls",
+                "pylsp",
+                "stylua",
+            }
+
+            local conf = {
+                settings = {
+                    pylsp = {
+                        configurationSources = { 'flake8' },
+                        plugins = {
+                            flake8 = {
+                                enabled = "true",
+                                ignore = {'E501', 'E231'},
+                                extendIgnore = {'E501', 'E231'},
+                                maxLineLength = 120,
                             },
+                            pycodestyle = {
+                                enaled = "true",
+                                ignore = {'W391', 'E501', 'E231'},
+                                maxLineLength = 120,
+                            },
+                            pylint = { 
+                                enabled = "true",
+                                args = {'--ignore=E501,E231', '-'},
+                            },
+                            pyflakes = { enabled = "true" },
+                            mccabe = {enabled = "true" },
+                            pydocstyle = { enabled = "true" },
+                            autopep8 = { enaled = "true" },
+                        }
+                    },
+                    Lua = {
+                        completition = {
+                            callSnippet = 'Replace',
                         },
                     },
                 },
-                -- Add new server here.
             }
-            
-            -- Creating the list of the things mason is required to install
-            local ensure_installed = vim.tbl_keys(servers or {})
-            vim.list_extend(ensure_installed, {
-                'stylua', -- Used to format Lua code
-            })
 
-            require('mason-tool-installer').setup { ensure_installed = ensure_installed }
-            
+            conf.capabilities = require('blink.cmp').get_lsp_capabilities()
+            vim.lsp.config('pylsp', conf) -- Set the configuration for the lsp server
+            -- Creating the list of the things mason is required to install
+            -- local ensure_installed = vim.tbl_keys(servers or {})
+            -- vim.list_extend(servers, {
+            --   'stylua', -- Used to format Lua code
+            -- })
+
+            require('mason-tool-installer').setup { ensure_installed = servers }
+
             require('mason-lspconfig').setup {
                 ensure_installed = {}, -- populated with mason-tool-installer
-                automatic_installation = false,
+                automatic_installation = true,
                 automatic_enable = true,
-                handlers = {
-                    function(server_name)
-                        local server = servers[server_name] or {}
-                        -- This handles overriding only values explicitly passed
-                        -- by the server configuration above. Useful when disabling
-                         -- certain features of an LSP (for example, turning off formatting for ts_ls)
-                        server.capabilities = vim.tbl_deep_extend('force', {}, capabilities, server.capabilities or {})
-                         require('lspconfig')[server_name].setup(server)
-                   end,
-                },
             }
         end,
     },
@@ -122,7 +140,19 @@ return {
             },
 
             -- (Default) Only show the documentation popup when manually triggered
-            completion = { documentation = { auto_show = true, auto_show_delay_ms = 500 }, },
+            completion = {
+                documentation = {
+                    auto_show = true,
+                    auto_show_delay_ms = 500,
+                    window = { border = 'single' },
+                },
+                menu = { border = 'single' }
+            },
+            -- Shows a signature help window while you type arguments for a function
+            signature = {
+                enabled = true,
+                window = { border = 'single' }
+            },
 
             -- Default list of enabled providers defined so that you can extend it
             -- elsewhere in your config, without redefining it, due to `opts_extend`
@@ -140,9 +170,10 @@ return {
             -- when the Rust fuzzy matcher is not available, by using `implementation = "prefer_rust"`
             --
             -- See the fuzzy documentation for more information
-            fuzzy = { implementation = "lua" },
-            -- Shows a signature help window while you type arguments for a function
-            signature = { enabled = true },
+            fuzzy = {
+                implementation = "prefer_rust",
+                sorts = {"sort_text"},
+            },
         },
         -- opts_extend = { "sources.default" }
     }
