@@ -51,3 +51,7 @@ vim.api.nvim_create_autocmd('TextYankPost', {
     vim.hl.on_yank()
   end,
 })
+
+vim.fn.sign_define('DapBreakpoint', {text='🛑', texthl='', linehl='', numhl=''}) -- Those are whats app symbles.
+vim.fn.sign_define('DapStopped', {text='⚪', texthl='', linehl='', numhl=''})
+
