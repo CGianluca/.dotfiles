@@ -37,6 +37,7 @@ vim.keymap.set('n', '<F7>', function() require('dap').step_into() end)
 vim.keymap.set('n', '<F8>', function() require('dap').step_out() end)
 vim.keymap.set('n', '<F11>', function() require('dap').restart() end)
 vim.keymap.set('n', '<F12>', function()
+    vim.g.state = "normal"
     require('dapui').close()
     require('dap').terminate()
 end)

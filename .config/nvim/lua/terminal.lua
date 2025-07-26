@@ -2,6 +2,7 @@ vim.keymap.set("t", "<esc><esc>", "<c-\\><c-n>")
 local state = {
     win = -1,
     buf = -1,
+    main_buf = -1
 }
 
 local function create_terminal_floating_window(opts)
@@ -14,11 +15,18 @@ local function create_terminal_floating_window(opts)
     local col = math.floor((vim.o.columns - width) / 2)  -- Center the window horizontally
 
     local buf = nil
-    if not vim.api.nvim_buf_is_valid(opts.buf) then
-        buf = vim.api.nvim_create_buf(true, false)
+
+    if vim.g.state == "dap" then
+        buf = require("dapui").elements.repl.buffer()
     else
-        buf = opts.buf
+        if not vim.api.nvim_buf_is_valid(opts.main_buf) then
+            buf = vim.api.nvim_create_buf(true, false)
+            opts.main_buf = buf
+        else
+            buf = opts.main_buf
+        end
     end
+
 
     local win = vim.api.nvim_open_win(
     buf,
@@ -34,15 +42,15 @@ local function create_terminal_floating_window(opts)
     }
     )
 
-    return {win = win, buf = buf}
+    return {win = win, buf = buf, main_buf=opts.main_buf}
 end
 
 local function toggle_terminal()
     if vim.api.nvim_win_is_valid(state.win) then
         vim.api.nvim_win_hide(state.win)
     else
-        state = create_terminal_floating_window{buf = state.buf}
-        if vim.bo[state.buf].buftype ~= "terminal" then
+        state = create_terminal_floating_window{buf = state.buf, main_buf = state.main_buf}
+        if vim.g.state == "normal" and vim.bo[state.buf].buftype ~= "terminal" then
             vim.cmd.terminal()
             vim.cmd.startinsert()
         end

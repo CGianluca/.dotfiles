@@ -1,5 +1,6 @@
 vim.g.mapleader = " "
 vim.g.maplocalleader = " "
+vim.g.state = "normal"
 require("config.lazy")
 require("remap")
 require("terminal")
