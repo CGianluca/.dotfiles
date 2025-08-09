@@ -1,14 +1,16 @@
 vim.keymap.set("n", "<leader>pv", vim.cmd.Ex)
+vim.keymap.set("n", "<C-w>d", vim.cmd.bd)
 
 vim.api.nvim_create_autocmd('LspAttach', {
   desc = 'LSP actions',
   callback = function(event)
 
-    vim.o.updatetime = 250
-    vim.cmd([[autocmd CursorHold,CursorHoldI * lua vim.diagnostic.open_float(nil, {focus=false})]])
+--    vim.o.updatetime = 250
+--    vim.cmd([[autocmd CursorHold,CursorHoldI * lua vim.diagnostic.open_float(nil, {focus=false})]])
 
     local opts = {buffer = event.buf}
     vim.keymap.set('n', 'K', '<cmd>lua vim.lsp.buf.hover()<cr>', opts)
+    vim.keymap.set('n', 'gw', '<cmd>lua vim.diagnostic.open_float(nil, {focus=false})<cr>', opts)
 --    vim.keymap.set('n', 'gk', '<cmd>lua vim.diagnostic.open_float()<cr>', opts)
     vim.keymap.set('n', 'gd', '<cmd>lua vim.lsp.buf.definition()<cr>', opts)
     vim.keymap.set('n', 'gD', '<cmd>lua vim.lsp.buf.declaration()<cr>', opts)
@@ -42,7 +44,7 @@ vim.keymap.set('n', '<F12>', function()
     require('dap').terminate()
 end)
 vim.keymap.set('n', '<Leader>bb', function() require('dap').toggle_breakpoint() end)
-vim.keymap.set('n', '<Leader>bl', function() require('dap').list_breakpoints() end)
+vim.keymap.set('n', '<Leader>bl', function() require('dap').list_breakpoints() end) -- List the breakpoints into the quickfix list, open the list with copen
 vim.keymap.set('n', '<Leader>bc', function() require('dap').clear_breakpoints() end)
 vim.keymap.set('n', '<Leader>sf', function() require('dap').focus_frame() end)
 vim.keymap.set('n', '<Leader>sn', function() require('dap').up() end)
