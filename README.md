@@ -20,5 +20,5 @@ _ Selezionare il font le impostazioni del terminale
 
     sudo apt install python3.13-venv 
     sudo apt install python3-pip
-    sudo apt install bundle
+    sudo apt install bundler
 
