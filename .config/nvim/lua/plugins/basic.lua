@@ -8,5 +8,6 @@ return {
           -- load the colorscheme here
           vim.cmd([[colorscheme tokyonight]])
         end,
-    }
+    },
+    { 'kepano/flexoki-neovim', name = 'flexoki' }
 }

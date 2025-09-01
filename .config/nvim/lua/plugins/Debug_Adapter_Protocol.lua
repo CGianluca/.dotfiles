@@ -119,6 +119,7 @@ return {
             'nvim-treesitter/nvim-treesitter',
             'mfussenegger/nvim-dap',
         },
+        enabled = false,
         config = function()
             require('nvim-dap-virtual-text').setup {
             }
