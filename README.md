@@ -1,10 +1,13 @@
+## TO INSTALL
+    sudo apt install fzf
+    sudo apt install stew
+
 ## HOW TO USE 
 
 sudo apt install stow
 stow ./
 
 Stow crea un symbolic link per tutti i file nella directory (./) nella dirctory padre
-
 
 ## FIXES
 
@@ -20,5 +23,8 @@ _ Selezionare il font le impostazioni del terminale
 
     sudo apt install python3.13-venv 
     sudo apt install python3-pip
-    sudo apt install bundle
+    sudo apt install bundler
+
+# Telescope
+    sudo apt install ripgrep
 
