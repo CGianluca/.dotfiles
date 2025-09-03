@@ -132,4 +132,13 @@ source $ZSH/oh-my-zsh.sh
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 
+if [ -d ${ZSH_CUSTOM}starting_scripts ]; then
+  for i in ${ZSH_CUSTOM}starting_scripts/*.sh; do
+    if [ -r $i ]; then
+      . $i
+    fi
+  done
+  unset i
+fi
+
 source /usr/share/doc/fzf/examples/key-bindings.zsh
