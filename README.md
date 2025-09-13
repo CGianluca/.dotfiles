@@ -1,6 +1,8 @@
 ## TO INSTALL
+    sudo apt install git
+    sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" #OH MY ZSH
     sudo apt install fzf
-    sudo apt install stew
+    sudo apt install stow
 
 ## HOW TO USE 
 
