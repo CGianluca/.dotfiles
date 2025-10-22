@@ -6,10 +6,16 @@
 
 ## HOW TO USE 
 
-sudo apt install stow
-stow ./
+stow permette di creare ricorsivamente symbolic link di tutti file e directories, presenti nella directory specificata, all'interno della directory padre.
+Affinche' non vada a creare symbolic link per anche le carte e' importante creare manualmente le directory .config e .config/custom
 
-Stow crea un symbolic link per tutti i file nella directory (./) nella dirctory padre
+sudo apt install stow
+
+mkdir .config
+mkdir .config/custom
+mkdir .config/custom/starting_scripts
+
+stow ./
 
 ## FIXES
 
