@@ -110,6 +110,14 @@ return {
                     end;
                 },
             }
+
+            dap.adapters.gdb_executable_root = {
+                id = 'gdb_executable_root';
+                type = 'executable';
+                command = 'sudo';
+                args = { 'gdb', '--quiet', '--interpreter=dap'};
+
+            }
         end
     },
 

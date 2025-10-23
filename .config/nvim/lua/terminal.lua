@@ -52,7 +52,7 @@ local function toggle_terminal()
         state = create_terminal_floating_window{buf = state.buf, main_buf = state.main_buf}
         if vim.g.state == "normal" and vim.bo[state.buf].buftype ~= "terminal" then
             vim.cmd.terminal()
-            vim.cmd.startinsert()
+            -- vim.cmd.startinsert()
         end
     end
 end
@@ -63,7 +63,7 @@ vim.api.nvim_create_user_command("Fterm", function()
 end
 , {})
 
-vim.keymap.set({'n', 't'}, "<space>tt", toggle_terminal)
+vim.keymap.set({'n'}, "<space>tt", toggle_terminal)
 
 
 

@@ -25,56 +25,47 @@ return {
               -- Allows extra capabilities provided by blink.cmp
               'saghen/blink.cmp',
         },
-        opts = {
-            servers = {
+        config = function()
 
-                lua_ls = {},
-                pylsp = {
-                    settings = {
-                        pylsp = {
-                            configurationSources = { 'flake8' },
-                            plugins = {
-                                flake8 = {
-                                    enabled = "true",
-                                    ignore = {'E501', 'E231', 'E265', 'D213'},
-                                    maxLineLength = 120,
-                                },
-                                pycodestyle = {
-                                    enaled = "true",
-                                    ignore = {'W391', 'E501', 'E231', 'E265', 'D213'},
-                                    maxLineLength = 120,
-                                },
-                                pylint = {
-                                    enabled = "true",
-                                    args = {'--ignore=E501,E231,E265,D213', '-'},
-                                },
-                                pyflakes = { enabled = "true" },
-                                mccabe = {enabled = "true" },
-                                pydocstyle = {
-                                    enabled = "true",
-                                    ignore = {'E265', 'D213'},
-                                },
-                                autopep8 = { enaled = "true" },
-                            }
-                        },
-                    }
-                },
-                stylua = {
-                    cmd = { "stylua", "--lsp" }
-
-                },
-                clangd = {},
-
+            local servers = {
+                "lua_ls",
+                "pylsp",
+                --"stylua",
+                "clangd",
             }
-        },
-        config = function(_, opts)
 
+            local conf_py = {
+                settings = {
+                    pylsp = {
+                        configurationSources = { 'flake8' },
+                        plugins = {
+                            flake8 = {
+                                enabled = "true",
+                                ignore = {'E501', 'E231', 'E265', 'D213'},
+                                maxLineLength = 120,
+                            },
+                            pycodestyle = {
+                                enaled = "true",
+                                ignore = {'W391', 'E501', 'E231', 'E265', 'D213'},
+                                maxLineLength = 120,
+                            },
+                            pylint = {
+                                enabled = "true",
+                                args = {'--ignore=E501,E231,E265,D213', '-'},
+                            },
+                            pyflakes = { enabled = "true" },
+                            mccabe = {enabled = "true" },
+                            pydocstyle = {
+                                enabled = "true",
+                                ignore = {'E265', 'D213'},
+                            },
+                            autopep8 = { enaled = "true" },
+                        }
+                    },
+                },
+            }
 
-            -- local lspconfig = require('lspconfig')
-            -- local lspconfig = vim.lsp.config
-            local mason_installer = require('mason-tool-installer')
-            local mason_lsp = require('mason-lspconfig')
-            -- conf_py.capabilities = require('blink.cmp').get_lsp_capabilities()
+            conf_py.capabilities = require('blink.cmp').get_lsp_capabilities()
 
             -- Creating the list of the things mason is required to install
             -- local ensure_installed = vim.tbl_keys(servers or {})
@@ -82,29 +73,15 @@ return {
             --   'stylua', -- Used to format Lua code
             -- })
 
-            -- vim.lsp.config('pylsp', conf_py) -- Set the configuration for the lsp server
+            vim.lsp.config('pylsp', conf_py) -- Set the configuration for the lsp server
 
-            local servers_list = {}
-            local i=0
-            for k,v in pairs(opts.servers) do
-                i=i+1
-                servers_list[i]=k
-            end
+            require('mason-tool-installer').setup { ensure_installed = servers }
 
-            mason_installer.setup {
-                ensure_installed = servers_list
-            }
-
-            mason_lsp.setup {
+            require('mason-lspconfig').setup {
                 ensure_installed = {}, -- populated with mason-tool-installer
                 automatic_installation = true,
                 automatic_enable = true,
             }
-
-            for server, config in pairs(opts.servers) do
-                config.capabilities = require('blink.cmp').get_lsp_capabilities()
-                vim.lsp.config(server, config)
-            end
 
         end,
     },

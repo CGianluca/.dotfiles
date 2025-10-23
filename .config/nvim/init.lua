@@ -12,6 +12,10 @@ vim.cmd [[
     highlight NonText ctermbg=none
 ]]
 
+-- ASK pass used from the dap in case sudo is reuired
+-- Works, but not for the DAP
+-- vim.env.SUDO_ASKPASS = "/home/cgianluca/.dotfiles/.config/nvim/sudo-askpass.sh"
+
 vim.g.have_nerd_font = true
 
 vim.opt.signcolumn = 'yes'

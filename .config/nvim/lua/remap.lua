@@ -1,5 +1,7 @@
 vim.keymap.set("n", "<leader>pv", vim.cmd.Ex)
 vim.keymap.set("n", "<C-w>d", vim.cmd.bd)
+vim.keymap.set("n", "<F1>", ":edit ~/.config/nvim/lua/remap.lua<CR>", { noremap = true, silent=true })
+-- vim.keymap.set({'n'}, "<space>tt", require('terminal').toggle_terminal())
 
 vim.api.nvim_create_autocmd('LspAttach', {
   desc = 'LSP actions',
