@@ -64,6 +64,7 @@ return {
 
                 },
                 clangd = {},
+                ts_ls = {},
 
             }
         },

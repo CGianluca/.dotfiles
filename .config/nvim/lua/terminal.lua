@@ -45,7 +45,9 @@ local function create_terminal_floating_window(opts)
     return {win = win, buf = buf, main_buf=opts.main_buf}
 end
 
-local function toggle_terminal()
+local M = {}
+
+function M.toggle_terminal()
     if vim.api.nvim_win_is_valid(state.win) then
         vim.api.nvim_win_hide(state.win)
     else
@@ -59,13 +61,13 @@ end
 -- Call the function to create the floating terminal window
 
 vim.api.nvim_create_user_command("Fterm", function()
-    toggle_terminal()
+    M.toggle_terminal()
 end
 , {})
 
-vim.keymap.set({'n'}, "<space>tt", toggle_terminal)
+-- vim.keymap.set({'n'}, "<space>tt", M.toggle_terminal)
 
-
+return M
 
 
 
