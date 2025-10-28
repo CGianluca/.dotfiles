@@ -60,3 +60,18 @@ vim.api.nvim_create_autocmd('TextYankPost', {
 vim.fn.sign_define('DapBreakpoint', {text='🛑', texthl='', linehl='', numhl=''}) -- Those are whats app symbles.
 vim.fn.sign_define('DapStopped', {text='⚪', texthl='', linehl='', numhl=''})
 
+
+-----------
+-- TESTS --
+-----------
+--[[
+vim.api.nvim_create_autocmd('LspAttach', {
+    callback = function(args)
+        -- print(vim.inspect(vim.lsp.get_client_by_id(args.data.client_id)))
+        print(vim.lsp.get_client_by_id(args.data.client_id).name)
+    end
+})
+--]]
+
+
+

@@ -3,9 +3,18 @@ vim.keymap.set("n", "<C-w>d", vim.cmd.bd)
 vim.keymap.set("n", "<F1>", ":edit ~/.config/nvim/lua/remap.lua<CR>", { noremap = true, silent=true })
 -- vim.keymap.set({'n'}, "<space>tt", require('terminal').toggle_terminal())
 
+vim.keymap.set({'n', 'v'}, "<C-_>", function ()
+    local fun = require("comments_utilities")
+    fun.Insert_comment(fun.comment_table[vim.fn.expand("%:e")])
+end)
+
+vim.keymap.set({'n'}, '<leader>tt', function()
+    require("terminal").toggle_terminal()
+end)
+
 vim.api.nvim_create_autocmd('LspAttach', {
-  desc = 'LSP actions',
-  callback = function(event)
+    desc = 'LSP actions',
+    callback = function(event)
 
 --    vim.o.updatetime = 250
 --    vim.cmd([[autocmd CursorHold,CursorHoldI * lua vim.diagnostic.open_float(nil, {focus=false})]])

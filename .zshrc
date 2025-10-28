@@ -143,3 +143,5 @@ if [ -d ${ZSH_CUSTOM}starting_scripts ]; then
 fi
 
 source /usr/share/doc/fzf/examples/key-bindings.zsh
+
+export PATH=${PATH}:/home/gianluca/.cargo/bin
