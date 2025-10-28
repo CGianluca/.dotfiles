@@ -16,6 +16,12 @@ vim.cmd [[
 -- Works, but not for the DAP
 -- vim.env.SUDO_ASKPASS = "/home/cgianluca/.dotfiles/.config/nvim/sudo-askpass.sh"
 
+vim.lsp.semantic_tokens.config = {
+    enabled = true,
+    priority = 50
+}
+
+vim.cmd 'colorscheme colorscheme'
 vim.g.have_nerd_font = true
 
 vim.opt.signcolumn = 'yes'
