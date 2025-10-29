@@ -24,7 +24,7 @@ M.setup = function()
     ["@constant"] = { fg = colors.variable },
     ["@type"] = { fg = colors.type },
     -- ["@module"] = { fg = colors.Function, bold=true, underline=true},
-    ["@module"] = { fg = colors.module, bold=true, underline=true},
+    ["@module"] = { fg = colors.module, bold=true, underline=false},
     -- type = { fg = colors.type },
     ["@number"] = { fg = colors.number },
     ["@boolean"] = { fg = colors.boolean },
