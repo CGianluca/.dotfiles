@@ -21,6 +21,9 @@ M.comment_table = {
         start_block=' /* ',
         end_block=' */ '
     },
+    scm = {
+        oneline='; '
+    }
 }
 
 
