@@ -145,3 +145,6 @@ fi
 source /usr/share/doc/fzf/examples/key-bindings.zsh
 
 export PATH=${PATH}:/home/gianluca/.cargo/bin
+
+# opencode
+export PATH=/home/gianluca/.opencode/bin:$PATH

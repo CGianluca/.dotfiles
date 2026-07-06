@@ -65,7 +65,14 @@ return {
                 },
                 clangd = {},
                 ts_ls = {},
-
+                rust_analyzer = {
+                    settings = {
+                        diagnostics = {
+                            -- enable = false;
+                            disabled = {"unlinked-file"},
+                        }
+                    }
+                }
             }
         },
         config = function(_, opts)
