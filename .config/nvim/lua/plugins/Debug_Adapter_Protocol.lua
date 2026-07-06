@@ -116,7 +116,13 @@ return {
                 type = 'executable';
                 command = 'sudo';
                 args = { 'gdb', '--quiet', '--interpreter=dap'};
+            }
 
+            dap.adapters.gdb_executable = {
+                id = 'gdb_executable';
+                type = 'executable';
+                command = 'gdb';
+                args = { '--quiet', '--interpreter=dap'};
             }
         end
     },

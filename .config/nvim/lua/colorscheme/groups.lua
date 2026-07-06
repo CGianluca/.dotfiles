@@ -30,8 +30,9 @@ M.setup = function()
     ["@boolean"] = { fg = colors.boolean },
     ["@operator"] = { fg = colors.operator },
     ["@variable"] = { fg = colors.variable },
-    ["@comment"] = { fg = colors.comment }
+    ["@comment"] = { fg = colors.comment },
 
+    ["Directory"] = { fg = colors.Function, underline=true },
 
   }
 end
