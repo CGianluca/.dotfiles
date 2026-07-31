@@ -140,6 +140,7 @@
 ((qualified_identifier
   (qualified_identifier
     (qualified_identifier
+
       (qualified_identifier
         (template_function
           (identifier) @function.call))))) @_parent

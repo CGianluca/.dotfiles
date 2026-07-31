@@ -34,6 +34,18 @@ M.setup = function()
 
     ["Directory"] = { fg = colors.Function, underline=true },
 
+    -- ["DapUIThread"] = { fg = "#0000FF" },
+    -- ["DapUICurrentFrameName"] = { fg = "#FF0000" },
+    -- ["DapUIFrameName"] = { fg = "#FF0000" },
+    -- ["DapUISource"] = { fg = "#FF0000" },
+    -- ["DapUILineNumber"] = { fg = "#FF0000" },
+
+    ["LineNr"] = {fg = colors.line_nr},
+    -- ["LineNr"] = {fg = "#C5BDB1"},
+    ["odd_line"] =  {bg = colors.lbg},
+    ["even_line"] = {bg = colors.dbg},
+    ["thread_title"] = {bg = colors.title_bg, fg = colors.title, bold=true},
+    -- ["DapUIStoppedThread"] = { fg = colors.h_red },
   }
 end
 

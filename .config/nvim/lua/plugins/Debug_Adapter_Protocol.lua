@@ -80,13 +80,78 @@ return {
             )
 
             dap.listeners.before.attach.dapui_config = function()
+
                 dapui.open()
                 vim.g.state = "dap"
             end
+
             dap.listeners.before.launch.dapui_config = function()
                 dapui.open()
                 vim.g.state = "dap"
             end
+
+            dap.listeners.after.event_stopped["dapui_config"] = function()
+                vim.defer_fn( function ()
+                    local stack_buffer_id = dapui.elements.stacks:buffer()
+                    local lines_number = vim.api.nvim_buf_line_count(stack_buffer_id);
+                    local ns_id = vim.api.nvim_create_namespace("DAP_custom");
+
+                    local base_line = 0;
+                    local set_extmark = false;
+                    for i = 0, lines_number do
+
+                        local line = vim.api.nvim_buf_get_lines(stack_buffer_id, i, i + 1, false)[1];
+                        if line == "" then
+                            set_extmark = false;
+                        end
+
+                        if set_extmark then
+                            local group = '';
+                            if ((i - base_line)%2 == 0) then
+                                group = 'even_line';
+                            else
+                                group = 'odd_line';
+                            end
+
+                            vim.api.nvim_buf_set_extmark(
+                                stack_buffer_id,
+                                ns_id,
+                                i,
+                                0,
+                                {
+                                    line_hl_group = group,
+                                }
+                            )
+                        end
+
+                        local inspect_table = vim.inspect_pos(stack_buffer_id, i, 0, {
+                            semantic_tokens = true,
+                            syntax = true,
+                            treesitter = true,
+                            extmarks = "all"
+                        }).extmarks;
+
+                        if (inspect_table[1] ~= nil) then
+                            if ( (inspect_table[1].opts.hl_group == 'DapUIStoppedThread') or (inspect_table[1].opts.hl_group == 'DapUIThread')) then
+                                vim.api.nvim_buf_set_extmark(
+                                    stack_buffer_id,
+                                    ns_id,
+                                    i,
+                                    0,
+                                    {
+                                        line_hl_group = 'thread_title',
+                                    }
+                                )
+                                base_line = i;
+                                set_extmark = true;
+                            end
+                        end
+                    end
+                end,
+                    500
+                )
+            end
+
             dap.listeners.before.event_terminated.dapui_config = function()
                 --dapui.close()
             end
