@@ -8,8 +8,8 @@ local state = {
 local function create_terminal_floating_window(opts)
     opts = opts or {}
 
-    local width = math.floor(vim.o.columns * 0.7)  -- 50% of the screen width
-    local height = math.floor(vim.o.lines * 0.8)  -- 80% of the screen height
+    local width = math.floor(vim.o.columns * 0.9)  -- 50% of the screen width
+    local height = math.floor(vim.o.lines * 0.9)  -- 80% of the screen height
 
     local row = math.floor((vim.o.lines - height) / 2)  -- Center the window vertically
     local col = math.floor((vim.o.columns - width) / 2)  -- Center the window horizontally
